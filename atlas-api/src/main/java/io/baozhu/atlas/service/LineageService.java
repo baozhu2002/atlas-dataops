@@ -1,0 +1,2 @@
+package io.baozhu.atlas.service; import io.baozhu.atlas.api.*; import io.baozhu.atlas.domain.*; import io.baozhu.atlas.persistence.*; import org.springframework.stereotype.Service;
+@Service public class LineageService {private final PipelineRepository repo;public LineageService(PipelineRepository r){repo=r;} public LineageResponse get(Long id){LineageGraph g=LineageGraph.from(repo.findById(id).definition());return new LineageResponse(g.nodes(),g.edges());}}
