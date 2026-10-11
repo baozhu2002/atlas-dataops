@@ -1,0 +1,1 @@
+package io.baozhu.atlas.execution; import io.baozhu.atlas.domain.*; public record TaskExecutionContext(Long runId,PipelineDefinition pipeline,TaskDefinition task) {}
