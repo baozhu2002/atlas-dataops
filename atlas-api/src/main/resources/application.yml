@@ -1,0 +1,13 @@
+spring:
+  application.name: atlas-dataops
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:atlas;MODE=PostgreSQL;DB_CLOSE_DELAY=-1}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+  sql.init.mode: always
+server.port: ${PORT:8080}
+atlas:
+  execution:
+    max-workers: ${ATLAS_MAX_WORKERS:4}
+management.endpoints.web.exposure.include: health,info,metrics
