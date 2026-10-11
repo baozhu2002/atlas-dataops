@@ -1,0 +1,1 @@
+package io.baozhu.atlas.execution; import io.baozhu.atlas.domain.TaskType; public interface TaskExecutor { TaskType supports(); TaskExecutionResult execute(TaskExecutionContext context); }
