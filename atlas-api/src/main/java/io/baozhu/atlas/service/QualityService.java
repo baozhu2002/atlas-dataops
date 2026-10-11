@@ -1,0 +1,2 @@
+package io.baozhu.atlas.service; import io.baozhu.atlas.api.*; import io.baozhu.atlas.domain.*; import org.springframework.stereotype.Service; import java.util.*;
+@Service public class QualityService {private final QualityEvaluator evaluator=new QualityEvaluator(); public QualityEvaluateResponse evaluate(QualityEvaluateRequest r){List<Map<String,Object>> rows=r.rows()==null?List.of():r.rows();List<QualityResult> results=evaluator.evaluate(rows,r.rules());return new QualityEvaluateResponse(results.stream().allMatch(QualityResult::passed),rows.size(),results);}}
