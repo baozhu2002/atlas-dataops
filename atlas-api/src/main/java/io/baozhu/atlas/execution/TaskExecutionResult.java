@@ -1,0 +1,1 @@
+package io.baozhu.atlas.execution; public record TaskExecutionResult(long recordsRead,long recordsWritten,String message) {}
