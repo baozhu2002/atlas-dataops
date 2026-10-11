@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: atlas
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlas
+    ports: ["5432:5432"]
+    volumes: ["atlas-postgres:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atlas -d atlas"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  api:
+    build: .
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/atlas
+      DB_USERNAME: atlas
+      DB_PASSWORD: atlas
+      DB_DRIVER: org.postgresql.Driver
+      ATLAS_MAX_WORKERS: 4
+    ports: ["8080:8080"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+volumes:
+  atlas-postgres:
