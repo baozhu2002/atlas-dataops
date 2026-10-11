@@ -1,0 +1,12 @@
+{
+  "pipelineKey": "orders-daily",
+  "name": "Orders Daily Gold Pipeline",
+  "version": "2026.10.11",
+  "tags": {"domain":"commerce", "owner":"data-platform"},
+  "tasks": [
+    {"key":"ingest_orders","name":"Ingest orders","type":"SQL","dependsOn":[],"config":{"input":"mysql.orders","output":"ods.orders","rows":"1200"},"maxRetries":2},
+    {"key":"normalize_orders","name":"Normalize orders","type":"PYTHON","dependsOn":["ingest_orders"],"config":{"input":"ods.orders","output":"dwd.orders","rows":"1180"},"maxRetries":1},
+    {"key":"quality_gate","name":"Run quality gate","type":"QUALITY","dependsOn":["normalize_orders"],"config":{"input":"dwd.orders","output":"quality.orders","rows":"1180"},"maxRetries":0},
+    {"key":"publish_metrics","name":"Publish metrics","type":"HTTP","dependsOn":["quality_gate"],"config":{"input":"quality.orders","output":"ads.order_metrics","rows":"30"},"maxRetries":2}
+  ]
+}
